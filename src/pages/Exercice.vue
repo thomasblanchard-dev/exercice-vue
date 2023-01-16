@@ -6,7 +6,7 @@
       <add-button @click="showFormDishe = true" />
 
       <q-dialog v-model="showFormDishe">
-        <form-dishe action="add" />
+        <form-dishe action="add" @close="showFormDishe = false" />
       </q-dialog>
     </div>
   </q-page>

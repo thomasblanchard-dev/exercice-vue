@@ -1,6 +1,6 @@
 <template>
   <q-card class="form-card">
-    <q-form ref="form">
+    <q-form ref="form" @submit="onSubmit">
       <q-card-section>
         <div class="text-h6 heading">{{ action }} Plat</div>
       </q-card-section>
@@ -59,14 +59,16 @@
       </q-card-section>
 
       <q-card-actions align="right">
-        <q-btn label="Annuler" color="grey" v-close-popup />
-        <q-btn label="Sauver" color="primary" @click="onSave"/>
+        <q-btn type="reset" label="Annuler" color="grey" v-close-popup />
+        <q-btn type="submit" label="Sauver" color="primary"/>
       </q-card-actions>
     </q-form>
   </q-card>
 </template>
 
 <script>
+import { TASKS_ACTIONS_ADD_DISHE } from '../constants/store/tasks';
+
 export default {
   props: ["action"],
   data() {
@@ -80,9 +82,13 @@ export default {
     };
   },
   methods: {
-    async onSave() {
+    async onSubmit() {
       const isValid = await this.$refs.form.validate();
-    }
+      if(isValid) {
+        if (this.action === "add") this.$store.dispatch(TASKS_ACTIONS_ADD_DISHE, this.dishe);
+        this.$emit('close');
+      }
+    },
   }
 };
 </script>
