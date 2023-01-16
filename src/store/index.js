@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import { tasks } from "./modules/tasks";
 
 // Importer votre module ici et l'ajouter au Store (ligne 19)
 
@@ -10,10 +11,10 @@ Vue.use(Vuex);
  * directly export the Store instantiation
  */
 
-export default function(/* { ssrContext } */) {
+export default function (/* { ssrContext } */) {
   const Store = new Vuex.Store({
     modules: {
-      // Votre module ici (mettre une virgule à la fin de la ligne 18)
+      tasks,
     },
 
     // enable strict mode (adds overhead!)
