@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import localStoragePlugin from "../plugins/localStorage";
 import { tasks } from "./modules/tasks";
 
 // Importer votre module ici et l'ajouter au Store (ligne 19)
@@ -16,6 +17,8 @@ export default function (/* { ssrContext } */) {
     modules: {
       tasks,
     },
+
+    plugins: [localStoragePlugin],
 
     // enable strict mode (adds overhead!)
     // for dev mode only

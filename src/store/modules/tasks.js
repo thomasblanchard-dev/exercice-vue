@@ -1,5 +1,5 @@
-import { ADD_DISHE, DELETE_DISHE, UPDATE_DISHE } from "../../constants/actions";
-import { TASKS_GETTERS_GET_NEW_DISHE_ID } from "../../constants/store/tasks";
+import { ADD_DISHE, DELETE_DISHE, LOAD_DISHES, UPDATE_DISHE } from "../../constants/actions";
+import { TASKS_GETTERS_GET_NEW_DISHE_ID, TASKS_STORAGE_KEY } from "../../constants/store/tasks";
 
 
 export const tasks = {
@@ -45,18 +45,24 @@ export const tasks = {
         getNewDisheId: state => state.dishes.length === 0 ? 1 : (Math.max(...state.dishes.map(d => d.id)) + 1)
     },
     mutations: {
+        [LOAD_DISHES](state, localStorage) {
+            state.dishes = localStorage.dishes;
+        },
         [ADD_DISHE](state, dishe) {
-            state.dishes.push({ ...dishe, id: this.getters[TASKS_GETTERS_GET_NEW_DISHE_ID] })
+            state.dishes.push({ ...dishe, id: this.getters[TASKS_GETTERS_GET_NEW_DISHE_ID] });
         },
         [UPDATE_DISHE](state, dishe) {
             const toUpdate = state.dishes.find(d => d.id === dishe.id);
             Object.assign(toUpdate, dishe);
         },
         [DELETE_DISHE](state, disheId) {
-            state.dishes = state.dishes.filter(d => d.id != disheId)
+            state.dishes = state.dishes.filter(d => d.id != disheId);
         }
     },
     actions: {
+        [LOAD_DISHES]({ commit }, localStorage) {
+            commit(LOAD_DISHES, localStorage);
+        },
         [ADD_DISHE]({ commit }, dishe) {
             commit(ADD_DISHE, dishe);
         },
