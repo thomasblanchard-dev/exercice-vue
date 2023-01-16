@@ -13,11 +13,19 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+import { TASKS_GETTERS_GET_DISHES } from "../constants/store/tasks";
+
 export default {
   data() {
     return {
       showFormDishe: false
     };
+  },
+  computed: {
+    ...mapGetters({
+      dishes: TASKS_GETTERS_GET_DISHES
+    })
   },
   components: {
     dishe: require("components/Dishe.vue").default,

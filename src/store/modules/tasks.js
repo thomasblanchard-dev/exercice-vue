@@ -37,5 +37,8 @@ export const tasks = {
                 note: 5
             }
         ],
+    },
+    getters: {
+        getDishes: state => state.dishes
     }
 };
