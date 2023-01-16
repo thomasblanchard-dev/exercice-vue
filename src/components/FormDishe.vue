@@ -1,52 +1,68 @@
 <template>
   <q-card class="form-card">
-    <q-card-section>
-      <div class="text-h6 heading">{{ action }} Plat</div>
-    </q-card-section>
+    <q-form ref="form">
+      <q-card-section>
+        <div class="text-h6 heading">{{ action }} Plat</div>
+      </q-card-section>
 
-    <q-card-section>
-      <div class="row q-mb-md">
-        <q-input filled v-model="dishe.name" label="Nom (Burger)" class="col" />
-      </div>
-
-      <div class="row q-mb-md">
-        <q-input
-          filled
-          v-model="dishe.description"
-          label="Description"
-          type="textarea"
-          class="col"
-        />
-      </div>
-
-      <div class="row q-mb-md">
-        <q-input
-          filled
-          v-model="dishe.image"
-          label="URL de l'image"
-          class="col"
-        />
-        <q-img
-          :src="dishe.image ? dishe.image : 'statics/image-placeholder.png'"
-          class="q-ml-sm"
-          contain
-        />
-      </div>
-
-      <div class="q-mb-md">
-        <div class="row">
-          <p class="q-mb-none">Note:</p>
+      <q-card-section>
+        <div class="row q-mb-md">
+          <q-input 
+            filled 
+            v-model="dishe.name" 
+            label="Nom (Burger)" 
+            class="col" 
+            lazy-rules="ondemand"
+            :rules="[
+              val => val && val.length > 0 || 'Le nom de votre plat est obligatoire',
+              val => val.length <= 20 || 'Le nom de votre plat est limité à 20 caractères'
+            ]" 
+          />
         </div>
-        <div class="row">
-          <q-rating v-model="dishe.note" size="2em" color="orange" />
-        </div>
-      </div>
-    </q-card-section>
 
-    <q-card-actions align="right">
-      <q-btn label="Annuler" color="grey" v-close-popup />
-      <q-btn label="Sauver" color="primary" v-close-popup />
-    </q-card-actions>
+        <div class="row q-mb-md">
+          <q-input
+            filled
+            v-model="dishe.description"
+            label="Description"
+            type="textarea"
+            class="col"
+            lazy-rules="ondemand"
+            :rules="[
+              val => val.length <= 135 || 'Le description de votre plat est limité à 135 caractères'
+            ]" 
+          />
+        </div>
+
+        <div class="row q-mb-md">
+          <q-input
+            filled
+            v-model="dishe.image"
+            label="URL de l'image"
+            class="col"
+          />
+          <q-img
+            :src="dishe.image ? dishe.image : 'statics/image-placeholder.png'"
+            class="q-ml-sm"
+            contain
+          />
+        </div>
+
+        <div class="q-mb-md">
+          <div class="row">
+            <p class="q-mb-none">Note:</p>
+          </div>
+          <div class="row">
+            <q-rating v-model="dishe.note" size="2em" color="orange" />
+          </div>
+        </div>
+      </q-card-section>
+
+      <q-card-actions align="right">
+        <q-btn label="Annuler" color="grey" v-close-popup />
+        <q-btn label="Sauver" color="primary" @click="onSave"/>
+      </q-card-actions>
+    </q-form>
   </q-card>
 </template>
 
@@ -62,6 +78,11 @@ export default {
         image: ""
       }
     };
+  },
+  methods: {
+    async onSave() {
+      const isValid = await this.$refs.form.validate();
+    }
   }
 };
 </script>
