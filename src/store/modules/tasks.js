@@ -1,4 +1,4 @@
-import { ADD_DISHE, DELETE_DISHE } from "../../constants/actions";
+import { ADD_DISHE, DELETE_DISHE, UPDATE_DISHE } from "../../constants/actions";
 import { TASKS_GETTERS_GET_NEW_DISHE_ID } from "../../constants/store/tasks";
 
 
@@ -48,6 +48,10 @@ export const tasks = {
         [ADD_DISHE](state, dishe) {
             state.dishes.push({ ...dishe, id: this.getters[TASKS_GETTERS_GET_NEW_DISHE_ID] })
         },
+        [UPDATE_DISHE](state, dishe) {
+            const toUpdate = state.dishes.find(d => d.id === dishe.id);
+            Object.assign(toUpdate, dishe);
+        },
         [DELETE_DISHE](state, disheId) {
             state.dishes = state.dishes.filter(d => d.id != disheId)
         }
@@ -55,6 +59,9 @@ export const tasks = {
     actions: {
         [ADD_DISHE]({ commit }, dishe) {
             commit(ADD_DISHE, dishe);
+        },
+        [UPDATE_DISHE]({ commit }, dishe) {
+            commit(UPDATE_DISHE, dishe);
         },
         [DELETE_DISHE]({ commit }, disheId) {
             commit(DELETE_DISHE, disheId);

@@ -67,13 +67,19 @@
 </template>
 
 <script>
-import { TASKS_ACTIONS_ADD_DISHE } from '../constants/store/tasks';
+import { ADD_DISHE, UPDATE_DISHE } from '../constants/actions';
+import { TASKS_ACTIONS_ADD_DISHE, TASKS_ACTIONS_UPDATE_DISHE } from '../constants/store/tasks';
 
 export default {
-  props: ["action"],
-  data() {
+  props: ["action", "item"],
+  data() {    
+    
+    if (this.$props.action === UPDATE_DISHE && !this.$props.item) {
+      throw `Erreur : item est obligatoire pour utiliser le composant FormDishe avec l'action ${UPDATE_DISHE}`;
+    }
+
     return {
-      dishe: {
+      dishe: this.$props.action === UPDATE_DISHE ? {...this.$props.item} : {
         name: "",
         description: "",
         note: 1,
@@ -85,7 +91,8 @@ export default {
     async onSubmit() {
       const isValid = await this.$refs.form.validate();
       if(isValid) {
-        if (this.action === "add") this.$store.dispatch(TASKS_ACTIONS_ADD_DISHE, this.dishe);
+        if (this.action === ADD_DISHE) this.$store.dispatch(TASKS_ACTIONS_ADD_DISHE, this.dishe);
+        if (this.action === UPDATE_DISHE) this.$store.dispatch(TASKS_ACTIONS_UPDATE_DISHE, this.dishe);
         this.$emit('close');
       }
     },

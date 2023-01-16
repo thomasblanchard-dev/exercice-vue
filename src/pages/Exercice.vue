@@ -6,7 +6,7 @@
       <add-button @click="showFormDishe = true" />
 
       <q-dialog v-model="showFormDishe">
-        <form-dishe action="add" @close="showFormDishe = false" />
+        <form-dishe :action="constants.ADD_DISHE" @close="showFormDishe = false" />
       </q-dialog>
     </div>
   </q-page>
@@ -14,12 +14,16 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import { ADD_DISHE } from "../constants/actions";
 import { TASKS_GETTERS_GET_DISHES } from "../constants/store/tasks";
 
 export default {
   data() {
     return {
-      showFormDishe: false
+      showFormDishe: false,
+      constants: {
+        ADD_DISHE
+      }
     };
   },
   computed: {

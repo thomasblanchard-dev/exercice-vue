@@ -40,12 +40,13 @@
     </q-dialog>
 
     <q-dialog v-model="showFormDishe">
-      <form-dishe action="modifier" />
+      <form-dishe :action="constants.UPDATE_DISHE" :item="dishe" @close="showFormDishe = false" />
     </q-dialog>
   </q-card>
 </template>
 
 <script>
+import { UPDATE_DISHE } from '../constants/actions';
 import { TASKS_ACTIONS_DELETE_DISHE } from "../constants/store/tasks";
 
 export default {
@@ -53,7 +54,10 @@ export default {
   data() {
     return {
       showDeleteConfirmationDialog: false,
-      showFormDishe: false
+      showFormDishe: false,
+      constants: {
+        UPDATE_DISHE
+      }
     };
   },
   methods: {
