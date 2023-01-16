@@ -1,6 +1,6 @@
 <template>
   <q-card class="card">
-    <q-img :src="dishe.image" basic contain>
+    <q-img :src="dishe.image || '../statics/image-placeholder.png'" basic contain>
       <div class="absolute-bottom text-h6">
         {{ dishe.name }}
       </div>
@@ -16,8 +16,8 @@
       />
     </q-card-section>
 
-    <q-card-section>
-      {{ dishe.description }}
+    <q-card-section :class="!dishe.description ? 'text-italic' : ''">
+      {{ dishe.description || "Aucune description fournie" }}
     </q-card-section>
 
     <q-card-actions class="absolute-bottom" align="right">
