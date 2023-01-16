@@ -1,3 +1,4 @@
+import { DELETE_DISHE } from "../../constants/actions";
 
 
 export const tasks = {
@@ -40,5 +41,15 @@ export const tasks = {
     },
     getters: {
         getDishes: state => state.dishes
+    },
+    mutations: {
+        [DELETE_DISHE](state, disheId) {
+            state.dishes = state.dishes.filter(d => d.id != disheId)
+        }
+    },
+    actions: {
+        [DELETE_DISHE]({ commit }, disheId) {
+            commit(DELETE_DISHE, disheId);
+        }
     }
 };
