@@ -45,7 +45,9 @@ module.exports = function (ctx) {
         'QRating',
         'QDialog',
         'QForm',
-        'QInput'
+        'QInput',
+
+        'QPullToRefresh'
       ],
 
       directives: [
