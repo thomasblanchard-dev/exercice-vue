@@ -8,7 +8,7 @@
 
     <q-card-section>
       <q-rating
-        :value="dishe.note"
+        :model-value="dishe.note"
         size="2em"
         color="orange"
         readonly
@@ -45,15 +45,18 @@
   </q-card>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { UPDATE_DISHE } from '../constants/actions';
 import { TASKS_ACTIONS_DELETE_DISHE } from "../constants/store/tasks";
 import { useStore } from 'vuex';
 import formDishe from "components/FormDishe.vue";
 import { ref } from '@vue/reactivity';
+import { Dishe } from '../types/dishe';
 
 const store = useStore();
-const props = defineProps(["dishe"]);
+const props = defineProps<{
+  dishe: Dishe
+}>();
 const showDeleteConfirmationDialog = ref(false);
 const showFormDishe = ref(false);
 const constants = ref({

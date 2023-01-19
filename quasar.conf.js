@@ -6,6 +6,8 @@ module.exports = configure(function (ctx) {
   return {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
+    supportTS: true,
+
     boot: [
     ],
 
