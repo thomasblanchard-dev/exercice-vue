@@ -38,20 +38,13 @@
   </q-layout>
 </template>
 
-<script>
-import { openURL } from "quasar";
+<script setup>
+import { ref } from '@vue/reactivity';
+import {useQuasar} from 'quasar';
 
-export default {
-  name: "MyLayout",
-  data() {
-    return {
-      leftDrawerOpen: this.$q.platform.is.desktop
-    };
-  },
-  methods: {
-    openURL
-  }
-};
+const $q = useQuasar();
+
+const leftDrawerOpen = ref($q.platform.is.desktop);
 </script>
 
 <style></style>

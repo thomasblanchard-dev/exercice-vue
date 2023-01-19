@@ -42,7 +42,7 @@
             class="col"
           />
           <q-img
-            :src="dishe.image ? dishe.image : 'statics/image-placeholder.png'"
+            :src="dishe.image ? dishe.image : 'image-placeholder.png'"
             class="q-ml-sm"
             contain
           />
@@ -66,38 +66,44 @@
   </q-card>
 </template>
 
-<script>
+<script setup>
+import { onMounted, ref } from 'vue';
 import { ADD_DISHE, UPDATE_DISHE } from '../constants/actions';
 import { TASKS_ACTIONS_ADD_DISHE, TASKS_ACTIONS_UPDATE_DISHE } from '../constants/store/tasks';
+import { useStore } from 'vuex';
 
-export default {
-  props: ["action", "item"],
-  data() {    
+const props = defineProps([
+  'action',
+  'item'
+]);
+
+const emit = defineEmits(['close']);
+const store = useStore();
     
-    if (this.$props.action === UPDATE_DISHE && !this.$props.item) {
-      throw `Erreur : item est obligatoire pour utiliser le composant FormDishe avec l'action ${UPDATE_DISHE}`;
-    }
+if (props.action === UPDATE_DISHE && !props.item) {
+  throw `Erreur : item est obligatoire pour utiliser le composant FormDishe avec l'action ${UPDATE_DISHE}`;
+}
 
-    return {
-      dishe: this.$props.action === UPDATE_DISHE ? {...this.$props.item} : {
-        name: "",
-        description: "",
-        note: 1,
-        image: ""
-      }
-    };
-  },
-  methods: {
-    async onSubmit() {
-      const isValid = await this.$refs.form.validate();
-      if(isValid) {
-        if (this.action === ADD_DISHE) this.$store.dispatch(TASKS_ACTIONS_ADD_DISHE, this.dishe);
-        if (this.action === UPDATE_DISHE) this.$store.dispatch(TASKS_ACTIONS_UPDATE_DISHE, this.dishe);
-        this.$emit('close');
-      }
-    },
+const form = ref(null);
+const dishe = ref(props.action === UPDATE_DISHE ? {...props.item} : {
+  name: "",
+  description: "",
+  note: 1,
+  image: ""
+});
+
+onMounted(() => {
+  console.log(form);
+})
+
+async function onSubmit() {
+  const isValid = await form.value.validate();
+  if(isValid) {
+    if (props.action === ADD_DISHE) store.dispatch(TASKS_ACTIONS_ADD_DISHE, dishe.value);
+    if (props.action === UPDATE_DISHE) store.dispatch(TASKS_ACTIONS_UPDATE_DISHE, dishe.value);
+    emit('close');
   }
-};
+}
 </script>
 
 <style>

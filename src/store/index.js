@@ -1,11 +1,8 @@
-import Vue from "vue";
 import Vuex from "vuex";
 import localStoragePlugin from "../plugins/localStorage";
 import { tasks } from "./modules/tasks";
 
 // Importer votre module ici et l'ajouter au Store (ligne 19)
-
-Vue.use(Vuex);
 
 /*
  * If not building with SSR mode, you can

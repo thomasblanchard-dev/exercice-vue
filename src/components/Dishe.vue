@@ -1,6 +1,6 @@
 <template>
   <q-card class="card">
-    <q-img :src="dishe.image || '../statics/image-placeholder.png'" basic contain>
+    <q-img :src="dishe.image || 'image-placeholder.png'" basic contain>
       <div class="absolute-bottom text-h6">
         {{ dishe.name }}
       </div>
@@ -40,35 +40,29 @@
     </q-dialog>
 
     <q-dialog v-model="showFormDishe">
-      <form-dishe :action="constants.UPDATE_DISHE" :item="dishe" @close="showFormDishe = false" />
+      <formDishe :action="constants.UPDATE_DISHE" :item="dishe" @close="showFormDishe = false" />
     </q-dialog>
   </q-card>
 </template>
 
-<script>
+<script setup>
 import { UPDATE_DISHE } from '../constants/actions';
 import { TASKS_ACTIONS_DELETE_DISHE } from "../constants/store/tasks";
+import { useStore } from 'vuex';
+import formDishe from "components/FormDishe.vue";
+import { ref } from '@vue/reactivity';
 
-export default {
-  props: ["dishe"],
-  data() {
-    return {
-      showDeleteConfirmationDialog: false,
-      showFormDishe: false,
-      constants: {
-        UPDATE_DISHE
-      }
-    };
-  },
-  methods: {
-    deleteDishe() {
-      this.$store.dispatch(TASKS_ACTIONS_DELETE_DISHE, this.dishe.id)
-    }
-  },
-  components: {
-    "form-dishe": require("components/FormDishe.vue").default
-  }
-};
+const store = useStore();
+const props = defineProps(["dishe"]);
+const showDeleteConfirmationDialog = ref(false);
+const showFormDishe = ref(false);
+const constants = ref({
+  UPDATE_DISHE
+});
+
+function deleteDishe() {
+  store.dispatch(TASKS_ACTIONS_DELETE_DISHE, props.dishe.id)
+}
 </script>
 
 <style>

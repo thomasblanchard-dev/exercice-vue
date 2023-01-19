@@ -1,6 +1,8 @@
 // Configuration for your app
 
-module.exports = function (ctx) {
+const { configure } = require('quasar/wrappers');
+
+module.exports = configure(function (ctx) {
   return {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
@@ -104,27 +106,27 @@ module.exports = function (ctx) {
         theme_color: '#027be3',
         icons: [
           {
-            'src': 'statics/icons/icon-128x128.png',
+            'src': 'icons/icon-128x128.png',
             'sizes': '128x128',
             'type': 'image/png'
           },
           {
-            'src': 'statics/icons/icon-192x192.png',
+            'src': 'icons/icon-192x192.png',
             'sizes': '192x192',
             'type': 'image/png'
           },
           {
-            'src': 'statics/icons/icon-256x256.png',
+            'src': 'icons/icon-256x256.png',
             'sizes': '256x256',
             'type': 'image/png'
           },
           {
-            'src': 'statics/icons/icon-384x384.png',
+            'src': 'icons/icon-384x384.png',
             'sizes': '384x384',
             'type': 'image/png'
           },
           {
-            'src': 'statics/icons/icon-512x512.png',
+            'src': 'icons/icon-512x512.png',
             'sizes': '512x512',
             'type': 'image/png'
           }
@@ -138,7 +140,7 @@ module.exports = function (ctx) {
     },
 
     electron: {
-      // bundler: 'builder', // or 'packager'
+      bundler: 'packager', // 'packager' or 'builder'
 
       extendWebpack(cfg) {
         // do something with Electron main process Webpack cfg
@@ -162,7 +164,19 @@ module.exports = function (ctx) {
         // https://www.electron.build/configuration/configuration
 
         // appId: 'quasar-app'
+      },
+
+      // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain
+      chainWebpackMain(/* chain */) {
+        // do something with the Electron main process Webpack cfg
+        // extendWebpackMain also available besides this chainWebpackMain
+      },
+
+      // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain
+      chainWebpackPreload(/* chain */) {
+        // do something with the Electron main process Webpack cfg
+        // extendWebpackPreload also available besides this chainWebpackPreload
       }
     }
   }
-}
+})
