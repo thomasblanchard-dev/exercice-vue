@@ -14,7 +14,7 @@
   </q-page>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import Dishe from '../components/Dishe.vue';
 import FormDishe from '../components/FormDishe.vue';
 import AddButton from '../components/AddButton.vue';
@@ -32,7 +32,7 @@ const store = useStore();
 
 const dishes = computed(() => store.getters[TASKS_GETTERS_GET_DISHES]);
 
-function refresh(done) {
+function refresh(done: () => void) {
   setTimeout(() => {
     // Add
     store.dispatch(TASKS_ACTIONS_ADD_DISHE, {
