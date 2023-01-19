@@ -35,7 +35,7 @@ const dishes = computed(() => store.getters[TASKS_GETTERS_GET_DISHES]);
 function refresh(done) {
   setTimeout(() => {
     // Add
-    this.$store.dispatch(TASKS_ACTIONS_ADD_DISHE, {
+    store.dispatch(TASKS_ACTIONS_ADD_DISHE, {
       name: "Nouveau plat",
       description: null,
       note: 4,
@@ -43,7 +43,7 @@ function refresh(done) {
     });
 
     // Update 
-    this.$store.dispatch(TASKS_ACTIONS_UPDATE_DISHE, {
+    store.dispatch(TASKS_ACTIONS_UPDATE_DISHE, {
       id: 3,
       image: "https://i.imgur.com/RbKjUjB.jpg",
       name: "[UPDATED] Petits choux",
