@@ -11,15 +11,16 @@
   "dependencies": {
     "@quasar/app-webpack": "^3.7.1",
     "@quasar/extras": "^1.15.9",
+    "pinia": "^2.0.29",
     "quasar": "^2.11.5",
     "vue": "^3.2.45",
     "vue-loader": "^17.0.1",
     "vue-router": "^4.0.0",
-    "vue-template-compiler": "^2.7.14",
-    "vuex": "^4.1.0"
+    "vue-template-compiler": "^2.7.14"
   },
   "devDependencies": {
     "strip-ansi": "=3.0.1",
+    "stylus": "^0.59.0",
     "stylus-loader": "^7.1.0"
   },
   "engines": {
@@ -29,8 +30,5 @@
   },
   "browserslist": [
     "last 1 version, not dead, ie >= 11"
-  ],
-  "resolutions": {
-    "ajv": "^8.12.0"
-  }
+  ]
 }

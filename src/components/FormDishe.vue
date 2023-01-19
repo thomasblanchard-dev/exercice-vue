@@ -69,9 +69,8 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { ADD_DISHE, UPDATE_DISHE } from '../constants/actions';
-import { TASKS_ACTIONS_ADD_DISHE, TASKS_ACTIONS_UPDATE_DISHE, TASKS_GETTERS_GET_NEW_DISHE_ID } from '../constants/store/tasks';
-import { useStore } from 'vuex';
 import { Dishe } from '../types/dishe';
+import { useTasksStore } from 'src/stores/modules/tasks';
 
 const props = defineProps<{
   action: typeof ADD_DISHE | typeof UPDATE_DISHE;
@@ -79,7 +78,7 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits(['close']);
-const store = useStore();
+const taskStore = useTasksStore();
     
 if (props.action === UPDATE_DISHE && !props.item) {
   throw `Erreur : item est obligatoire pour utiliser le composant FormDishe avec l'action ${UPDATE_DISHE}`;
@@ -89,7 +88,7 @@ const form = ref<{value: {validate: () => boolean}} | null>(null);
 const dishe = ref<Dishe>(props.action === UPDATE_DISHE 
   ? {...props.item as Dishe} 
   : {
-    id: store.getters[TASKS_GETTERS_GET_NEW_DISHE_ID],
+    id: taskStore.getNewDisheId,
     name: "",
     description: "",
     note: 1,
@@ -99,12 +98,12 @@ const dishe = ref<Dishe>(props.action === UPDATE_DISHE
 async function onSubmit() {
   let isValid = false;
 
-  if(form !== null) {
+  if(form != null) {
     isValid = await form.value.validate();
   }
   if(isValid) {
-    if (props.action === ADD_DISHE) store.dispatch(TASKS_ACTIONS_ADD_DISHE, dishe.value);
-    if (props.action === UPDATE_DISHE) store.dispatch(TASKS_ACTIONS_UPDATE_DISHE, dishe.value);
+    if (props.action === ADD_DISHE) taskStore.addDishe(dishe.value);
+    if (props.action === UPDATE_DISHE) taskStore.updateDishe(dishe.value);
     emit('close');
   }
 }

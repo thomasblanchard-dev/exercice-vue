@@ -40,20 +40,19 @@
     </q-dialog>
 
     <q-dialog v-model="showFormDishe">
-      <formDishe :action="constants.UPDATE_DISHE" :item="dishe" @close="showFormDishe = false" />
+      <FormDishe :action="constants.UPDATE_DISHE" :item="dishe" @close="showFormDishe = false" />
     </q-dialog>
   </q-card>
 </template>
 
 <script setup lang="ts">
 import { UPDATE_DISHE } from '../constants/actions';
-import { TASKS_ACTIONS_DELETE_DISHE } from "../constants/store/tasks";
-import { useStore } from 'vuex';
-import formDishe from "components/FormDishe.vue";
+import FormDishe from "components/FormDishe.vue";
 import { ref } from '@vue/reactivity';
 import { Dishe } from '../types/dishe';
+import { useTasksStore } from 'src/stores/modules/tasks';
 
-const store = useStore();
+const taskStore = useTasksStore();
 const props = defineProps<{
   dishe: Dishe
 }>();
@@ -64,7 +63,7 @@ const constants = ref({
 });
 
 function deleteDishe() {
-  store.dispatch(TASKS_ACTIONS_DELETE_DISHE, props.dishe.id)
+  taskStore.deleteDishe(props.dishe.id)
 }
 </script>
 
