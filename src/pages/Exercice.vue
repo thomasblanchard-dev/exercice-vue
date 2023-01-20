@@ -7,7 +7,7 @@
         <AddButton @click="showFormDishe = true" />
 
         <q-dialog v-model="showFormDishe">
-          <FormDishe :action="constants.ADD_DISHE" @close="showFormDishe = false" />
+          <FormDishe :action="addAction" @close="showFormDishe = false" />
         </q-dialog>
       </div>
     </q-pull-to-refresh>
@@ -23,9 +23,7 @@ import { ref } from 'vue';
 import { useTasksStore } from '../stores/modules/tasks';
 
 const showFormDishe = ref(false);
-const constants = ref({
-  ADD_DISHE
-});
+const addAction = ref<typeof ADD_DISHE>(ADD_DISHE);
 
 const taskStore = useTasksStore();
 
