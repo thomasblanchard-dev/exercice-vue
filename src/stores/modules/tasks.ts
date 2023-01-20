@@ -58,10 +58,7 @@ export const useTasksStore = defineStore("tasks", () => {
     dishes.value.push(dishe);
   }
   function updateDishe(dishe: Dishe) {
-    const toUpdate = dishes.value.find((d) => d.id === dishe.id);
-    if (toUpdate) {
-      Object.assign(toUpdate, dishe);
-    }
+    dishes.value.map((d) => (d.id !== dishe.id ? d : dishe));
   }
   function deleteDishe(disheId: number) {
     dishes.value = dishes.value.filter((d) => d.id != disheId);
