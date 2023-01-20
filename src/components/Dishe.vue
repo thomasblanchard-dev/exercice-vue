@@ -28,16 +28,13 @@
     </q-card-actions>
 
     <q-dialog v-model="showDeleteConfirmationDialog">
-      <q-card>
-        <q-card-section>
-          Êtes-vous sûr de vouloir retirer ce plat ?
-        </q-card-section>
-        <q-card-actions align="right">
-          <q-btn flat label="Annuler" color="primary" v-close-popup />
-          <q-btn flat label="Valider" color="primary" v-close-popup @click="deleteDishe" />
-        </q-card-actions>
-      </q-card>
+      <ConfirmationModal 
+        content="Êtes-vous sûr de vouloir retirer ce plat ?"
+        @confirm="deleteDishe"
+        confirmText="Confimer"
+        cancelText="Annuler"/>
     </q-dialog>
+
 
     <q-dialog v-model="showFormDishe">
       <FormDishe :action="updateAction" :item="dishe" @close="showFormDishe = false" />
@@ -48,6 +45,7 @@
 <script setup lang="ts">
 import { UPDATE_DISHE } from '../constants/actions';
 import FormDishe from "components/FormDishe.vue";
+import ConfirmationModal from "./ConfirmationModal.vue";
 import { ref } from 'vue';
 import { Dishe } from '../types/dishe';
 import { useTasksStore } from 'src/stores/modules/tasks';
