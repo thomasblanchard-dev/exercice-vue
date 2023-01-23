@@ -84,7 +84,7 @@ if (props.action === UPDATE_DISHE && !props.item) {
   throw `Erreur : item est obligatoire pour utiliser le composant FormDishe avec l'action ${UPDATE_DISHE}`;
 }
 
-const form = ref<{value: {validate: () => boolean}} | null>(null);
+const form = ref<{validate: () => boolean} | null>(null);
 const dishe = ref<Dishe>(props.action === UPDATE_DISHE 
   ? {...props.item as Dishe} 
   : {
@@ -98,8 +98,8 @@ const dishe = ref<Dishe>(props.action === UPDATE_DISHE
 async function onSubmit() {
   let isValid = false;
 
-  if(form != null) {
-    isValid = await form.value.validate();
+  if(form.value != null) {
+    isValid = await form.value.validate()
   }
   if(isValid) {
     if (props.action === ADD_DISHE) taskStore.addDishe(dishe.value);
